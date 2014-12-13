@@ -13,6 +13,7 @@ public class Hmk4_CECS274
   protected Random rng = new Random();
   protected static Scanner userIn = new Scanner(System.in);
   
+  // User inputs size of the list  
   public void setLinkedListSize()
   {
     System.out.println("How large would you like your array to be?");
@@ -22,6 +23,7 @@ public class Hmk4_CECS274
     lList.display();
   }
   
+  // Fills the list with random numbers
   public linkedList setLinkedList(linkedList list)
   {
    System.out.println("Set the boundaries of your array. The program will generate an array of random numbers for you.");
@@ -29,6 +31,7 @@ public class Hmk4_CECS274
     int maxValue;
     int minValue;
     
+    // User inputs the boundaries
     do
     {
     System.out.println("What is your minimum value?");
@@ -90,6 +93,7 @@ public class Hmk4_CECS274
     return list;
   }
   
+  // Finds the element
   public static void elementFinder()
   {
     System.out.println("What integer would you like to search for?");
@@ -112,42 +116,52 @@ public class Hmk4_CECS274
     lList.display();
   }
   
+  // recursive function to see if an element exists in the list
   private static Boolean contains(Node start, Object obj)
   {
+   // false if list is empty
     if (lList.isEmpty())
     {
       System.out.println("Your list is empty.");
       return false;
     }
+    // if the object is found
     if (obj.equals(start.getData()))
     {
       return true;
     }
+    // recursive call
+    // As long as the next Node is not null
     if (start.getLink() != null)
     {
       return contains(start.getLink(), obj);
     } else
     {
-      return false;
+      return false; // otherwise, it is false
     }
    }
   
+  // directly traverses links
   public static boolean Contains(Object obj)
   {
     boolean doesContain = false;
+    // if list is empty, return false
     if (lList.isEmpty())
     {
       System.out.println("Your list is empty.");
       return doesContain;
     } else
     {
+      // as long as the next node has a value
+      // run the loop
       while (lList.start.getLink() != null)
       {
+        // if the element is found, return true
         if (obj.equals(lList.start.getData()))
         {
           doesContain = true;
           break;
-        } else
+        } else // otherwise, move on to the next link
         {
           lList.start = lList.start.getLink();
           doesContain = false;
