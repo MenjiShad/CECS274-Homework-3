@@ -1,51 +1,30 @@
-CECS274-Homework-3
-==================
-import java.util.Scanner;
+
+Hmk4_CECS274 class
+==========================
+
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Random;
 
-public class Hmk3
-{
-  // instance variables
-  protected ArrayList<Integer> aList;
+public class Hmk4_CECS274
+{ 
+  protected static linkedList lList = new linkedList();
   protected int SIZE;
-  protected Scanner input = new Scanner(System.in);
   protected Random rng = new Random();
+  protected static Scanner userIn = new Scanner(System.in);
   
-  // Set the size of the list
-  public void setSize()
+  public void setLinkedListSize()
   {
     System.out.println("How large would you like your array to be?");
-    SIZE = input.nextInt();
-    aList = new ArrayList<Integer>(SIZE);
-    aList = setList(aList);
-    for (int element : aList)
-    {
-      System.out.print(element + "  ");
-    }
-    System.out.println();
-    int foundIndex = elementFinder(aList);
-    if (foundIndex == -1)
-    {
-     System.out.println("This list does not contain that element."); 
-    } else
-    {
-      System.out.println("This element is located at index: " + foundIndex);
-    }
+    SIZE = userIn.nextInt();
+    lList = new linkedList();
+    lList = setLinkedList(lList);
+    lList.display();
   }
   
-  // Find the index of the search element
-  public int elementFinder(ArrayList<Integer> list)
+  public linkedList setLinkedList(linkedList list)
   {
-    System.out.println("Which element would you like to search for?");
-    int element = input.nextInt();
-    return list.indexOf(element);
-  }
-  
-  // Put values into list
-  public ArrayList<Integer> setList(ArrayList<Integer> list)
-  {
-    System.out.println("Set the boundaries of your array. The program will generate an array of random numbers for you.");
+   System.out.println("Set the boundaries of your array. The program will generate an array of random numbers for you.");
     boolean isAcceptable;
     int maxValue;
     int minValue;
@@ -53,13 +32,13 @@ public class Hmk3
     do
     {
     System.out.println("What is your minimum value?");
-    minValue = input.nextInt();
+    minValue = userIn.nextInt();
     System.out.println("What is your maximum value?");
-    maxValue = input.nextInt();
+    maxValue = userIn.nextInt();
     
     if ((maxValue-minValue+1) < SIZE)
     {
-      System.out.println("Unacceptable boundaries. Please input again.");
+      System.out.println("Unacceptable boundaries. Please userIn again.");
       isAcceptable = false;
     } else
     {
@@ -105,9 +84,96 @@ public class Hmk3
           }
         } while (isDuplicate); // as long as the RNG value roll matches a previous roll, run the check
       }
-      list.add(element); // Adds the RNG value to the list
+      list.insertAtStart(element); // Adds the RNG value to the list
       usedNumberStorage.add(element); // Collects previous unique values of the RNG
     }
     return list;
+  }
+  
+  public static void elementFinder()
+  {
+    System.out.println("What integer would you like to search for?");
+    Object searchObj = userIn.nextInt();
+    if (contains(lList.start,searchObj))
+    {
+      System.out.println("Your element has been found. (with recursion)");
+    } else
+    {
+      System.out.println("Your element was not found. (with recursion)");
+    }
+    lList.display();
+    if (Contains(searchObj))
+    {
+      System.out.println("Your element has been found. (with direct links)");
+    } else
+    {
+      System.out.println("Your element was not found. (with direct links)");
+    }
+    lList.display();
+  }
+  
+  private static Boolean contains(Node start, Object obj)
+  {
+    if (lList.isEmpty())
+    {
+      System.out.println("Your list is empty.");
+      return false;
+    }
+    if (obj.equals(start.getData()))
+    {
+      return true;
+    }
+    if (start.getLink() != null)
+    {
+      return contains(start.getLink(), obj);
+    } else
+    {
+      return false;
+    }
+   }
+  
+  public static boolean Contains(Object obj)
+  {
+    boolean doesContain = false;
+    if (lList.isEmpty())
+    {
+      System.out.println("Your list is empty.");
+      return doesContain;
+    } else
+    {
+      while (lList.start.getLink() != null)
+      {
+        if (obj.equals(lList.start.getData()))
+        {
+          doesContain = true;
+          break;
+        } else
+        {
+          lList.start = lList.start.getLink();
+          doesContain = false;
+        }
+      }
+      return doesContain;
+    }
+  }
+  
+  public void info()
+  {
+    System.out.println("Name: James Dinh");
+    System.out.println("Student ID: 011599417");
+  }
+}
+
+Driver class
+==========================
+
+public class Hmk4_CECS274_Driver
+{
+  public static void main(String[] IDontWantToDoThisAnyMore)
+  {
+    Hmk4_CECS274 call = new Hmk4_CECS274();
+    call.info();
+    call.setLinkedListSize();
+    call.elementFinder();
   }
 }
